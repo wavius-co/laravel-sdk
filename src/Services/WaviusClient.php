@@ -316,6 +316,11 @@ class WaviusClient implements WaviusClientInterface
                     {
                         return null;
                     }
+                    
+                    public function __toString(): string
+                    {
+                        return $this->content;
+                    }
                 };
             }
             
