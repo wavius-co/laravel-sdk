@@ -36,18 +36,18 @@ class WaviusService
     /**
      * Send a text message
      */
-    public function sendMessage(string $to, string $message, ?string $instanceId = null): mixed
+    public function sendMessage(string $chatId, string $message, ?string $instanceId): mixed
     {
         $this->setInstanceId($instanceId);
 
         $data = [
-            'to' => $to,
+            'chatId' => $chatId,
             'message' => $message,
         ];
 
         $this->logRequest('sendMessage', $data);
         
-        $response = $this->client->post('/messages/chat', $data);
+        $response = $this->client->post('/instances/'.$this->client->getInstanceId().'/messages/chat', $data);
         
         $this->logResponse('sendMessage', $response);
         

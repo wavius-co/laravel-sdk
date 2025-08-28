@@ -245,7 +245,7 @@ class WaviusClient implements WaviusClientInterface
                         return strlen($string);
                     }
                     
-                    public function seek(int $offset, int $whence = SEEK_SET): bool
+                    public function seek(int $offset, int $whence = SEEK_SET): void
                     {
                         switch ($whence) {
                             case SEEK_SET:
@@ -258,7 +258,6 @@ class WaviusClient implements WaviusClientInterface
                                 $this->position = strlen($this->content) + $offset;
                                 break;
                         }
-                        return true;
                     }
                     
                     public function tell(): int
