@@ -1,0 +1,57 @@
+{
+    "name": "wavius/whatsapp-laravel-sdk",
+    "description": "Laravel SDK for Wavius WhatsApp API - Comprehensive REST API for managing WhatsApp instances and sending messages",
+    "keywords": [
+        "laravel",
+        "whatsapp",
+        "sdk",
+        "api",
+        "wavius",
+        "messaging"
+    ],
+    "homepage": "https://github.com/wavius/whatsapp-laravel-sdk",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Wavius",
+            "email": "support@wavius.co",
+            "homepage": "https://wavius.co"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "laravel/framework": "^10.0|^11.0",
+        "crell/serde": "^1.0",
+        "guzzlehttp/guzzle": "^7.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5|^10.0",
+        "orchestra/testbench": "^8.0|^9.0",
+        "laravel/pint": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Wavius\\WhatsApp\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Wavius\\WhatsApp\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Wavius\\WhatsApp\\WaviusServiceProvider"
+            ],
+            "aliases": {
+                "Wavius": "Wavius\\WhatsApp\\Facades\\Wavius"
+            }
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
