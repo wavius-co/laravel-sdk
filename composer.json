@@ -1,5 +1,5 @@
 {
-    "name": "wavius/whatsapp-laravel-sdk",
+    "name": "wavius-co/laravel-sdk",
     "description": "Laravel SDK for Wavius WhatsApp API - Comprehensive REST API for managing WhatsApp instances and sending messages",
     "keywords": [
         "laravel",
@@ -9,7 +9,7 @@
         "wavius",
         "messaging"
     ],
-    "homepage": "https://github.com/wavius/whatsapp-laravel-sdk",
+    "homepage": "https://github.com/wavius-co/laravel-sdk",
     "license": "MIT",
     "authors": [
         {

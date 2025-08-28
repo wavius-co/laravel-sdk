@@ -25,14 +25,14 @@ A comprehensive Laravel package for integrating with the Wavius WhatsApp API. Th
 ### Via Composer
 
 ```bash
-composer require wavius-co/wavius-laravel-sdk
+composer require wavius-co/laravel-sdk
 ```
 
 ### Manual Installation
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/wavius-co/wavius-laravel-sdk.git
+git clone https://github.com/wavius-co/laravel-sdk.git
 ```
 
 2. Add to your `composer.json`:
