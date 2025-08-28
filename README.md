@@ -39,7 +39,7 @@ git clone https://github.com/wavius-co/laravel-sdk.git
 ```json
 {
     "require": {
-        "wavius/whatsapp-laravel-sdk": "*"
+        "wavius-co/laravel-sdk": "*"
     }
 }
 ```
