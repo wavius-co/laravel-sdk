@@ -3,12 +3,10 @@
 namespace Wavius\WhatsApp;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Contracts\Http\Kernel;
 use Wavius\WhatsApp\Config\WaviusConfig;
 use Wavius\WhatsApp\Contracts\WaviusClientInterface;
 use Wavius\WhatsApp\Services\WaviusClient;
 use Wavius\WhatsApp\Services\WaviusService;
-use Wavius\WhatsApp\Http\Middleware\WaviusAuthentication;
 
 /**
  * Wavius Service Provider
@@ -25,7 +23,7 @@ class WaviusServiceProvider extends ServiceProvider
     {
         // Merge configuration
         $this->mergeConfigFrom(
-            __DIR__ . '/Config/wavius.php', 'wavius'
+            __DIR__ . '/../config/wavius.php', 'wavius'
         );
 
         // Bind the Wavius client interface to its implementation
@@ -37,6 +35,11 @@ class WaviusServiceProvider extends ServiceProvider
                 $app->make(WaviusClientInterface::class),
                 $app->make(WaviusConfig::class)
             );
+        });
+
+        // Bind the facade
+        $this->app->singleton('wavius', function ($app) {
+            return $app->make(WaviusService::class);
         });
 
         // Bind the configuration class
@@ -55,40 +58,7 @@ class WaviusServiceProvider extends ServiceProvider
             $this->publishes([
                 __DIR__ . '/../config/wavius.php' => config_path('wavius.php'),
             ], 'wavius-config');
-
-            // Publish migrations
-            $this->publishes([
-                __DIR__ . '/../database/migrations' => database_path('migrations'),
-            ], 'wavius-migrations');
         }
-
-        // Register middleware
-        $this->registerMiddleware();
-
-        // Register routes
-        $this->registerRoutes();
-    }
-
-    /**
-     * Register the package middleware.
-     */
-    protected function registerMiddleware(): void
-    {
-        $this->app['router']->aliasMiddleware('wavius.auth', WaviusAuthentication::class);
-    }
-
-    /**
-     * Register the package routes.
-     */
-    protected function registerRoutes(): void
-    {
-        $routeConfig = [
-            'namespace' => 'Wavius\WhatsApp\Http\Controllers',
-            'prefix' => config('wavius.routes.prefix', 'api/v1'),
-            'middleware' => config('wavius.routes.middleware', ['api']),
-        ];
-
-        $this->loadRoutesFrom(__DIR__ . '/../routes/api.php');
     }
 
     /**
