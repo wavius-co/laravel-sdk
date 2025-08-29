@@ -57,13 +57,13 @@ class WaviusService
     /**
      * Send an image message
      */
-    public function sendImage(string $to, string $imagePath, ?string $caption = null, ?string $instanceId = null): mixed
+    public function sendImage(string $chatId, string $imagePath, ?string $caption = null, ?string $instanceId = null): mixed
     {
         $this->setInstanceId($instanceId);
-
+        
         $data = [
-            'to' => $to,
-            'image' => $imagePath,
+            'chatId' => $chatId,
+            'imageUrl' => $imagePath,
         ];
 
         if ($caption) {
@@ -72,7 +72,7 @@ class WaviusService
 
         $this->logRequest('sendImage', $data);
         
-        $response = $this->client->post('/messages/image', $data);
+        $response = $this->client->post('/instances/'.$this->client->getInstanceId().'/messages/image', $data);
         
         $this->logResponse('sendImage', $response);
         
@@ -82,12 +82,12 @@ class WaviusService
     /**
      * Send a document message
      */
-    public function sendDocument(string $to, string $documentPath, ?string $caption = null, ?string $instanceId = null): mixed
+    public function sendDocument(string $chatId, string $documentPath, ?string $caption = null, ?string $instanceId = null): mixed
     {
         $this->setInstanceId($instanceId);
 
         $data = [
-            'to' => $to,
+            'chatId' => $chatId,
             'document' => $documentPath,
         ];
 
@@ -97,7 +97,7 @@ class WaviusService
 
         $this->logRequest('sendDocument', $data);
         
-        $response = $this->client->post('/messages/document', $data);
+        $response = $this->client->post('/instances/'.$this->client->getInstanceId().'/messages/document', $data);
         
         $this->logResponse('sendDocument', $response);
         
@@ -107,18 +107,18 @@ class WaviusService
     /**
      * Send an audio message
      */
-    public function sendAudio(string $to, string $audioPath, ?string $instanceId = null): mixed
+    public function sendAudio(string $chatId, string $audioPath, ?string $instanceId = null): mixed
     {
         $this->setInstanceId($instanceId);
 
         $data = [
-            'to' => $to,
+            'chatId' => $chatId,
             'audio' => $audioPath,
         ];
 
         $this->logRequest('sendAudio', $data);
         
-        $response = $this->client->post('/messages/audio', $data);
+        $response = $this->client->post('/instances/'.$this->client->getInstanceId().'/messages/audio', $data);
         
         $this->logResponse('sendAudio', $response);
         
@@ -128,12 +128,12 @@ class WaviusService
     /**
      * Send a video message
      */
-    public function sendVideo(string $to, string $videoPath, ?string $caption = null, ?string $instanceId = null): mixed
+    public function sendVideo(string $chatId, string $videoPath, ?string $caption = null, ?string $instanceId = null): mixed
     {
         $this->setInstanceId($instanceId);
 
         $data = [
-            'to' => $to,
+            'chatId' => $chatId,
             'video' => $videoPath,
         ];
 
@@ -143,7 +143,7 @@ class WaviusService
 
         $this->logRequest('sendVideo', $data);
         
-        $response = $this->client->post('/messages/video', $data);
+        $response = $this->client->post('/instances/'.$this->client->getInstanceId().'/messages/video', $data);
         
         $this->logResponse('sendVideo', $response);
         
@@ -153,12 +153,12 @@ class WaviusService
     /**
      * Send a location message
      */
-    public function sendLocation(string $to, float $latitude, float $longitude, ?string $name = null, ?string $address = null, ?string $instanceId = null): mixed
+    public function sendLocation(string $chatId, float $latitude, float $longitude, ?string $name = null, ?string $address = null, ?string $instanceId = null): mixed
     {
         $this->setInstanceId($instanceId);
 
         $data = [
-            'to' => $to,
+            'chatId' => $chatId,
             'latitude' => $latitude,
             'longitude' => $longitude,
         ];
@@ -173,7 +173,7 @@ class WaviusService
 
         $this->logRequest('sendLocation', $data);
         
-        $response = $this->client->post('/messages/location', $data);
+        $response = $this->client->post('/instances/'.$this->client->getInstanceId().'/messages/location', $data);
         
         $this->logResponse('sendLocation', $response);
         
@@ -183,18 +183,18 @@ class WaviusService
     /**
      * Send a contact message
      */
-    public function sendContact(string $to, array $contact, ?string $instanceId = null): mixed
+    public function sendContact(string $chatId, array $contact, ?string $instanceId = null): mixed
     {
         $this->setInstanceId($instanceId);
 
         $data = [
-            'to' => $to,
+            'chatId' => $chatId,
             'contact' => $contact,
         ];
 
         $this->logRequest('sendContact', $data);
         
-        $response = $this->client->post('/messages/contact', $data);
+        $response = $this->client->post('/instances/'.$this->client->getInstanceId().'/messages/contact', $data);
         
         $this->logResponse('sendContact', $response);
         
