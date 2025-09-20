@@ -33,12 +33,33 @@ class WaviusService
         }
     }
 
+    public function markAsRead(string $chatId, ?string $instanceId = null): mixed
+    {
+        $this->setInstanceId($instanceId);
+        
+        $this->logRequest('markAsRead', ['chatId' => $chatId]);
+        
+        $data = [
+            'chatId' => $chatId,
+        ];
+
+        $response = $this->client->post('/instances/'.$this->client->getInstanceId().'/chats/mark-as-read', $data);
+        
+        $this->logResponse('markAsRead', $response);
+        
+        return $this->parseResponse($response);
+    }
+
     /**
      * Send a text message
      */
-    public function sendMessage(string $chatId, string $message, ?string $instanceId): mixed
+    public function sendMessage(string $chatId, string $message, ?string $instanceId = null): mixed
     {
         $this->setInstanceId($instanceId);
+
+        if (!$this->client->getInstanceId()) {
+            throw new \Exception('Instance ID is not set');
+        }
 
         $data = [
             'chatId' => $chatId,
@@ -60,6 +81,10 @@ class WaviusService
     public function sendImage(string $chatId, string $imagePath, ?string $caption = null, ?string $instanceId = null): mixed
     {
         $this->setInstanceId($instanceId);
+
+        if (!$this->client->getInstanceId()) {
+            throw new \Exception('Instance ID is not set');
+        }
         
         $data = [
             'chatId' => $chatId,
@@ -111,6 +136,10 @@ class WaviusService
     {
         $this->setInstanceId($instanceId);
 
+        if (!$this->client->getInstanceId()) {
+            throw new \Exception('Instance ID is not set');
+        }
+
         $data = [
             'chatId' => $chatId,
             'audio' => $audioPath,
@@ -131,6 +160,10 @@ class WaviusService
     public function sendVideo(string $chatId, string $videoPath, ?string $caption = null, ?string $instanceId = null): mixed
     {
         $this->setInstanceId($instanceId);
+
+        if (!$this->client->getInstanceId()) {
+            throw new \Exception('Instance ID is not set');
+        }
 
         $data = [
             'chatId' => $chatId,
@@ -156,6 +189,10 @@ class WaviusService
     public function sendLocation(string $chatId, float $latitude, float $longitude, ?string $name = null, ?string $address = null, ?string $instanceId = null): mixed
     {
         $this->setInstanceId($instanceId);
+
+        if (!$this->client->getInstanceId()) {
+            throw new \Exception('Instance ID is not set');
+        }
 
         $data = [
             'chatId' => $chatId,
@@ -187,6 +224,10 @@ class WaviusService
     {
         $this->setInstanceId($instanceId);
 
+        if (!$this->client->getInstanceId()) {
+            throw new \Exception('Instance ID is not set');
+        }
+
         $data = [
             'chatId' => $chatId,
             'contact' => $contact,
@@ -208,9 +249,17 @@ class WaviusService
     {
         $this->setInstanceId($instanceId);
 
+        if (! $this->client->getInstanceId()) {
+            throw new \Exception('Instance ID is not set');
+        }
+
+        if (! isset($params['chatId'])) {
+            throw new \Exception('Chat ID is not set');
+        }
+
         $this->logRequest('getMessages', $params);
         
-        $response = $this->client->get('/messages', $params);
+        $response = $this->client->get('/instances/'.$this->client->getInstanceId().'/messages', $params);
         
         $this->logResponse('getMessages', $response);
         
@@ -920,11 +969,13 @@ class WaviusService
     /**
      * Set instance ID
      */
-    public function setInstanceId(?string $instanceId): void
+    public function setInstanceId(?string $instanceId): self
     {
         if ($instanceId) {
             $this->client->setInstanceId($instanceId);
         }
+
+        return $this;
     }
 
     /**
@@ -938,9 +989,11 @@ class WaviusService
     /**
      * Set token
      */
-    public function setToken(string $token): void
+    public function setToken(string $token): self
     {
         $this->client->setToken($token);
+
+        return $this;
     }
 
     /**
