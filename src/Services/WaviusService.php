@@ -53,7 +53,7 @@ class WaviusService
     /**
      * Send a text message
      */
-    public function sendMessage(string $chatId, string $message, ?string $instanceId = null): mixed
+    public function sendMessage(string $chatId, string $message, ?string $instanceId = null, ?array $options = []): mixed
     {
         $this->setInstanceId($instanceId);
 
@@ -65,6 +65,10 @@ class WaviusService
             'chatId' => $chatId,
             'message' => $message,
         ];
+
+        if ($options) {
+            $data = array_merge($data, $options);
+        }
 
         $this->logRequest('sendMessage', $data);
         
